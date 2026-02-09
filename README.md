@@ -6,13 +6,13 @@ GBDA302 Week 3 Example 1: Instructions Screen with Back button
 
 ## Authors
 
-Karen Cochrane and David Han
+Karen Cochrane and David Han. Changes to code made by Oma Tahir
 
 ---
 
 ## Description
 
-This p5.js project demonstrates a simple multi-screen game structure using a state-based approach. The example includes a start screen, an instructions screen with a back button, a basic game screen, and win/lose outcome screens. The focus is on showing how to separate screens into different files, route input based on the current game state, and design simple UI elements such as buttons and keyboard controls.
+This game is called "wake up late?", its a game that allows the user to pick from different options which have a different outcome. Based on the option the player picks they will gain or lose points. There's a desired outcome, a so-so, and a bad one. Once the user picks their option the outcome is shown, the user can then click to play again.
 
 ---
 
@@ -34,6 +34,6 @@ N/A
 
 ## GenAI
 
-The code was written by Dr. Karen Cochrane but she used GenAI to write the comments.
+The code was written by Dr. Karen Cochrane but she used GenAI to write the comments. Oma Tahir used GenAI to include the new story line components based off the instructional prompts that followed my commands.
 
 ---
