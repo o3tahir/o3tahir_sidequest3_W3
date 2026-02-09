@@ -26,28 +26,38 @@ function drawStart() {
   // and also reuse the same information for hover checks.
   const startBtn = {
     x: width / 2,
-    y: 320,
+    y: 300,
     w: 240,
     h: 80,
     label: "START",
   };
 
+  // ADDED: Story button
+  const storyBtn = {
+    x: width / 2,
+    y: 410,
+    w: 240,
+    h: 80,
+    label: "STORY",
+  };
+
   const instrBtn = {
     x: width / 2,
-    y: 430,
+    y: 520,
     w: 240,
     h: 80,
     label: "INSTRUCTIONS",
   };
 
-  // Draw both buttons
+  // Draw all buttons
   drawButton(startBtn);
+  drawButton(storyBtn);
   drawButton(instrBtn);
 
   // ---- Cursor feedback ----
-  // If the mouse is over either button, show a hand cursor
+  // If the mouse is over any button, show a hand cursor
   // so the player knows it is clickable.
-  const over = isHover(startBtn) || isHover(instrBtn);
+  const over = isHover(startBtn) || isHover(storyBtn) || isHover(instrBtn);
   cursor(over ? HAND : ARROW);
 }
 
@@ -57,12 +67,18 @@ function drawStart() {
 // Called from main.js only when currentScreen === "start"
 function startMousePressed() {
   // For input checks, we only need x,y,w,h (label is optional)
-  const startBtn = { x: width / 2, y: 320, w: 240, h: 80 };
-  const instrBtn = { x: width / 2, y: 430, w: 240, h: 80 };
+  const startBtn = { x: width / 2, y: 300, w: 240, h: 80 };
+  const storyBtn = { x: width / 2, y: 410, w: 240, h: 80 };
+  const instrBtn = { x: width / 2, y: 520, w: 240, h: 80 };
 
   // If START is clicked, go to the game screen
   if (isHover(startBtn)) {
     currentScreen = "game";
+  }
+  // ADDED: If STORY is clicked, start the story
+  else if (isHover(storyBtn)) {
+    health = 0;
+    currentScreen = "story";
   }
   // If INSTRUCTIONS is clicked, go to the instructions screen
   else if (isHover(instrBtn)) {
@@ -75,10 +91,17 @@ function startMousePressed() {
 // ------------------------------------------------------------
 // Provides keyboard shortcuts:
 // - ENTER starts the game
+// - S starts the story
 // - I opens instructions
 function startKeyPressed() {
   if (keyCode === ENTER) {
     currentScreen = "game";
+  }
+
+  // ADDED: S for story
+  if (key === "s" || key === "S") {
+    health = 0;
+    currentScreen = "story";
   }
 
   if (key === "i" || key === "I") {

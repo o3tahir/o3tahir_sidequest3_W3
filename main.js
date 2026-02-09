@@ -21,8 +21,9 @@
 //
 // We store the “name” of the current screen as a string.
 // Only one screen should be active at a time.
-let currentScreen = "start"; // "start" | "instr" | "game" | "win" | "lose"
-
+let currentScreen = "menu"; // Flow: "menu" | "story" | "onTime" | "missDay" | "parentsYell" | "ending"
+// ADDED: Player health stat for story
+let health = 0;
 // ------------------------------
 // setup() runs ONCE at the beginning
 // ------------------------------
@@ -41,19 +42,26 @@ function setup() {
 // This is the core “router” for visuals.
 // Depending on currentScreen, we call the correct draw function.
 function draw() {
-  // Each screen file defines its own draw function:
-  //   start.js         → drawStart()
-  //   instructions.js  → drawInstr()
-  //   game.js          → drawGame()
-  //   win.js           → drawWin()
-  //   lose.js          → drawLose()
+  // Menu + Story flow. Each screen file defines its own draw function:
+  //   menu.js          → drawMenu()
+  //   story.js         → drawStory()
+  //   onTime.js        → drawOnTime()
+  //   missDay.js       → drawMissDay()
+  //   parentsYell.js   → drawParentsYell()
+  //   ending.js        → drawEnding()
 
-  if (currentScreen === "start") drawStart();
-  else if (currentScreen === "instr") drawInstr();
-  else if (currentScreen === "game") drawGame();
-  else if (currentScreen === "win") drawWin();
-  else if (currentScreen === "lose") drawLose();
-
+  if (currentScreen === "menu") drawMenu();
+  else if (currentScreen === "story") drawStory();
+  else if (currentScreen === "onTime") drawOnTime();
+  else if (currentScreen === "missDay") drawMissDay();
+  else if (currentScreen === "parentsYell") drawParentsYell();
+  else if (currentScreen === "ending") drawEnding();
+  else {
+    // Safety fallback: if currentScreen is invalid, reset to menu.
+    // This prevents a "soft lock" with a blank screen.
+    currentScreen = "menu";
+    drawMenu();
+  }
   // (Optional teaching note)
   // This “if/else chain” is a very common early approach.
   // Later in the course you might replace it with:
@@ -66,20 +74,15 @@ function draw() {
 // ------------------------------
 // This routes mouse input to the correct screen handler.
 function mousePressed() {
-  // Each screen *may* define a mouse handler:
-  // start.js         → startMousePressed()
-  // instructions.js  → instrMousePressed()
-  // game.js          → gameMousePressed()
-  // win.js           → winMousePressed()
-  // lose.js          → loseMousePressed()
+  // Menu + Story flow. Each screen *may* define a mouse handler.
+  // The ?.() means "call this function only if it exists"
 
-  if (currentScreen === "start") startMousePressed();
-  else if (currentScreen === "instr") instrMousePressed();
-  else if (currentScreen === "game") gameMousePressed();
-  // The ?.() means “call this function only if it exists”
-  // This prevents errors if a screen doesn’t implement a handler.
-  else if (currentScreen === "win") winMousePressed?.();
-  else if (currentScreen === "lose") loseMousePressed?.();
+  if (currentScreen === "menu") menuMousePressed?.();
+  else if (currentScreen === "story") storyMousePressed?.();
+  else if (currentScreen === "onTime") onTimeMousePressed?.();
+  else if (currentScreen === "missDay") missDayMousePressed?.();
+  else if (currentScreen === "parentsYell") parentsYellMousePressed?.();
+  else if (currentScreen === "ending") endingMousePressed?.();
 }
 
 // ------------------------------
@@ -87,18 +90,14 @@ function mousePressed() {
 // ------------------------------
 // This routes keyboard input to the correct screen handler.
 function keyPressed() {
-  // Each screen *may* define a key handler:
-  // start.js         → startKeyPressed()
-  // instructions.js  → instrKeyPressed()
-  // game.js          → gameKeyPressed()
-  // win.js           → winKeyPressed()
-  // lose.js          → loseKeyPressed()
+  // Menu + Story flow. Each screen *may* define a key handler.
 
-  if (currentScreen === "start") startKeyPressed();
-  else if (currentScreen === "instr") instrKeyPressed();
-  else if (currentScreen === "game") gameKeyPressed?.();
-  else if (currentScreen === "win") winKeyPressed?.();
-  else if (currentScreen === "lose") loseKeyPressed?.();
+  if (currentScreen === "menu") menuKeyPressed?.();
+  else if (currentScreen === "story") storyKeyPressed?.();
+  else if (currentScreen === "onTime") onTimeKeyPressed?.();
+  else if (currentScreen === "missDay") missDayKeyPressed?.();
+  else if (currentScreen === "parentsYell") parentsYellKeyPressed?.();
+  else if (currentScreen === "ending") endingKeyPressed?.();
 }
 
 // ------------------------------------------------------------
